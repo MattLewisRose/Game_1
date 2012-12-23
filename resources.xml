@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    
+ <!-- Static Images -->
+    
+    <!-- Player -->
+    <resource type="image" id="player_static">/data/image/player/player.jpg</resource>
+    
+    <!-- Game -->
+    <resource type="image" id="ingame_background">/data/image/interface/ingame.png</resource>
+    
+    
+</resources>
+

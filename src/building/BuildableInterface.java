@@ -22,5 +22,8 @@ package building;
 
 interface BuildableInterface {
 
-
+    void onClick();
+    void onCreate();
+    void onDestroy();
+    
 }

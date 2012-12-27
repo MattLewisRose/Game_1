@@ -51,6 +51,7 @@ public class GameState extends BasicGameState {
         
         _map.update(container, game, delta);
         
+        Interface.getInstance().update(container, game, delta);
         
         
     }
@@ -68,10 +69,7 @@ public class GameState extends BasicGameState {
         
         //Player.getInstance().render(container, g);
         
-    }
-    
-    @Override
-    public void keyReleased(int key, char c) {
+        Interface.getInstance().render(container, game, g);
         
     }
 }

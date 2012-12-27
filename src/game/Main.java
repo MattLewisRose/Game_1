@@ -1,6 +1,5 @@
 package game;
 
-import effects.particle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;

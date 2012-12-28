@@ -17,7 +17,7 @@
  *
  *
  */
-package game;
+package mapgen;
 
 import java.util.Random;
 import org.newdawn.slick.GameContainer;

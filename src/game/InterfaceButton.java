@@ -19,6 +19,7 @@
  */
 package game;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -32,8 +33,8 @@ public class InterfaceButton {
     InterfaceButton() {
         x = 100;
         y = 100;
-        w = 400;
-        h = 400;
+        w = 160;
+        h = 80;
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -43,9 +44,6 @@ public class InterfaceButton {
         int mouseY = input.getMouseY();
 
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-
-            System.out.println("pressed");
-
             if ((mouseX >= x) && (mouseX <= (x + w)) && (mouseY >= y) && (mouseY <= (y + h))) {
                 System.out.println("button pressed");
             }
@@ -53,6 +51,9 @@ public class InterfaceButton {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+        g.setColor(Color.white);
         g.fillRect(x, y, w, h);
+        g.setColor(Color.black);
+        g.drawString("This is a button", x + 5, y + 5);
     }
 }

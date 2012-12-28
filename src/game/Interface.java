@@ -32,6 +32,7 @@ public class Interface {
     public final static int STATE_INGAME = 1;
     public final static int INGAME_width = 176;
     private Image INGAME_background;
+    
     InterfaceButton temp = new InterfaceButton();
     
     private Interface() {

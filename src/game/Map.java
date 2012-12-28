@@ -19,6 +19,7 @@
  */
 package game;
 
+import mapgen.MapTile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
@@ -34,7 +35,7 @@ public class Map {
     final int width = (1024 - 176) / tile_size;
     final int height = 800 / tile_size;
     SpriteSheet _spriteSheet;
-    MapTile[][] map = new MapTile[width][height];
+    MapTile[][] map;
 
     Map() {
         Image a = ResourceManager.getInstance().getImage("map_1");
@@ -44,11 +45,7 @@ public class Map {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                map[x][y] = new MapTile(1, x * tile_size, y * tile_size, _spriteSheet);
-            }
-        }
+        map = mapgen.one.create(width, height, tile_size, _spriteSheet);
 
     }
 

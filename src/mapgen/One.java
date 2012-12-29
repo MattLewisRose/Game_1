@@ -1,5 +1,5 @@
 /*
- * one.java
+ * One.java
  *
  * Created on 28-Dec-2012
  * @Author Harry
@@ -19,22 +19,48 @@
  */
 package mapgen;
 
+import java.util.Random;
 import org.newdawn.slick.SpriteSheet;
 
-public class one {
+public class One {
 
-    one() {
-    }
-
+    int base_width = 5;
+    int base_height = 5;
+    
     public static MapTile[][] create(int width, int height, int tile_size, SpriteSheet _spriteSheet) {
         MapTile[][] result = new MapTile[width][height];
 
-
+        /*
+         * 
+         * Make the base of the map completely random
+         * 
+         */
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                result[x][y] = new MapTile(1, x * tile_size, y * tile_size, _spriteSheet);
+
+                int pickedNumber = new Random().nextInt(4);
+
+                result[x][y] = new MapTile(pickedNumber, x * tile_size, y * tile_size, _spriteSheet);
             }
         }
+
+        /*
+         * 
+         * Set up the base ground area
+         * 
+         */
+
+        for (int y = 38; y < 48; y++) {
+            for (int x = 2; x < 17; x++) {
+            
+                result[x][y] = new MapTile(MAP.TILE_BASE_GROUND, x * tile_size, y * tile_size, _spriteSheet);
+            
+            }
+        }
+
+
+
+
 
         return result;
     }

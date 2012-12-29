@@ -45,7 +45,7 @@ public class Map {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        map = mapgen.one.create(width, height, tile_size, _spriteSheet);
+        map = mapgen.One.create(width, height, tile_size, _spriteSheet);
 
     }
 

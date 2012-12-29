@@ -34,44 +34,52 @@ public class MapTile {
 
     MapTile(int type, int x, int y, SpriteSheet _spriteSheet) {
 
-
+        this.x = x;
+        this.y = y;
+        if (type < 16) {
+            _tileImage = _spriteSheet.getSubImage(type, 0);
+        }
 
         switch (type) {
 
             case 1:
                 //System.out.println("asd");
                 break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+
+            // From here onwards are specific tiles
+
+            // Base tile
+            case 100:
+                _tileImage = _spriteSheet.getSubImage(0, 1);
+
+                break;
+
             default:
                 //System.out.println("asd2");
                 break;
         }
-
-        Random rand = new Random();
-        int pickedNumber;
 
         /*
          if (x % 10 < 3) {
          pickedNumber = rand.nextInt(2);
          } else {
          pickedNumber = rand.nextInt(3);
-         }
+         }}*/
 
-         if (y % 10 < 6) {
-         if (pickedNumber < 2) {
-         pickedNumber = 1;
-         } else {
-         pickedNumber = rand.nextInt(2) + 1;
-         }
 
-         }*/
 
-        pickedNumber = rand.nextInt(4);
-        
+        // _tileImage = _spriteSheet.getSubImage(type, 0);
 
-        _tileImage = _spriteSheet.getSubImage(pickedNumber, 0);
-
-        this.x = x;
-        this.y = y;
 
     }
 

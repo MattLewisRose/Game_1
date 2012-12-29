@@ -19,9 +19,11 @@
  */
 package game;
 
+import java.util.ArrayList;
 import mapgen.MapTile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mapgen.ResourceNode;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -36,6 +38,10 @@ public class Map {
     final int height = 800 / tile_size;
     SpriteSheet _spriteSheet;
     MapTile[][] map;
+    ArrayList<ResourceNode> resourceNodes = new ArrayList<ResourceNode>();
+    
+    Shader testShader;
+    Image testImage;
 
     Map() {
         Image a = ResourceManager.getInstance().getImage("map_1");
@@ -46,17 +52,24 @@ public class Map {
         }
 
         map = mapgen.One.create(width, height, tile_size, _spriteSheet);
-
+        resourceNodes = mapgen.One.createResourceNodes();
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+        for (int i = 0; i < resourceNodes.size(); i++) {
+            resourceNodes.get(i).update(container, game, delta);
+        }
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 map[x][y].render(container, game, g);
+                
             }
+        }
+        for (int i = 0; i < resourceNodes.size(); i++) {
+            resourceNodes.get(i).render(container, game, g);
         }
     }
 }

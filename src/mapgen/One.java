@@ -19,15 +19,18 @@
  */
 package mapgen;
 
+import java.util.ArrayList;
 import java.util.Random;
 import org.newdawn.slick.SpriteSheet;
 
 public class One {
 
-    int base_width = 5;
-    int base_height = 5;
-    
     public static MapTile[][] create(int width, int height, int tile_size, SpriteSheet _spriteSheet) {
+
+
+        int base_width = 14;
+        int base_height = 10;
+
         MapTile[][] result = new MapTile[width][height];
 
         /*
@@ -50,18 +53,41 @@ public class One {
          * 
          */
 
-        for (int y = 38; y < 48; y++) {
-            for (int x = 2; x < 17; x++) {
-            
+        // Bottom left
+        for (int y = 38; y < (38 + base_height); y++) {
+            for (int x = 2; x < 2 + base_width; x++) {
                 result[x][y] = new MapTile(MAP.TILE_BASE_GROUND, x * tile_size, y * tile_size, _spriteSheet);
-            
+
+            }
+        }
+        // Top right 
+        for (int y = 2; y < (2 + base_height); y++) {
+            for (int x = 37; x < 37 + base_width; x++) {
+                result[x][y] = new MapTile(MAP.TILE_BASE_GROUND, x * tile_size, y * tile_size, _spriteSheet);
+
             }
         }
 
+        return result;
+    }
 
+    public static ArrayList<ResourceNode> createResourceNodes() {
+        ArrayList<ResourceNode> result = new ArrayList<>();
 
+        // Bottom left
+        result.add(new ResourceNode(130, 480, false));
+        result.add(new ResourceNode(350, 690, false));
 
+        // Top right
+        result.add(new ResourceNode(500, 112, false));
+        result.add(new ResourceNode(700, 250, false));
+
+        // Middle
+        result.add(new ResourceNode(125, 125, false));
+        result.add(new ResourceNode(400, 400, true));
+        result.add(new ResourceNode(650, 650, false));
 
         return result;
+
     }
 }

@@ -20,6 +20,7 @@ public class GameState extends BasicGameState {
     int last_dice_roll_count = 0;
     long next_roll;
     Map _map;
+    
 
     @Override
     public int getID() {
@@ -30,8 +31,7 @@ public class GameState extends BasicGameState {
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.game = game;
-        //Player.getInstance().init(container);
-
+        
         last_dice_roll = System.currentTimeMillis();
         next_roll = System.currentTimeMillis();
 
@@ -61,14 +61,13 @@ public class GameState extends BasicGameState {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         g.setBackground(Color.gray);
 
+
         _map.render(container, game, g);
         Interface.getInstance().render(container, game, g);
 
         g.setColor(Color.darkGray);
         g.drawString((game_timer) + "", 100, 150);
         g.drawString("" + number_of_rolls, 100, 100);
-
-        //Player.getInstance().render(container, g);
 
 
     }

@@ -9,6 +9,10 @@
     <!-- Game -->
     <resource type="image" id="ingame_background">/data/image/interface/ingame.png</resource>
     
+    <!-- Test -->
+    <resource type="image" id="testImage">/data/image/testImage.png</resource>
     
+
+
 </resources>
 

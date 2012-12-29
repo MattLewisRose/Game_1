@@ -1,6 +1,5 @@
 package game;
 
-
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -27,10 +26,10 @@ public class Shader {
      * Basic Shader object
      */
     public Shader(String filename) {
-        
+
         filename = "data/shader/" + filename;
         System.out.println("Filename:" + filename);
-        
+
         vertexShaderId = ARBShaderObjects.glCreateShaderObjectARB(ARBVertexShader.GL_VERTEX_SHADER_ARB);
         ARBShaderObjects.glShaderSourceARB(vertexShaderId, getProgramCode(filename + ".vert"));
         ARBShaderObjects.glCompileShaderARB(vertexShaderId);

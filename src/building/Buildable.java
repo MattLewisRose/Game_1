@@ -17,7 +17,6 @@
  *
  *
  */
-
 package building;
 
 import org.newdawn.slick.Image;
@@ -25,11 +24,10 @@ import org.newdawn.slick.Image;
 public class Buildable {
 
     float x, y;
-    int w, h;
+    int w, h, cost;
     Image baseImage;
-    
-    Buildable(){
 
+    Buildable() {
     }
 
     public int getH() {
@@ -48,6 +46,14 @@ public class Buildable {
         return y;
     }
 
+    public float getCost() {
+        return this.cost;
+    }
+
+    public void setCost(int c) {
+        this.cost = c;
+    }
+
     public void setH(int h) {
         this.h = h;
     }
@@ -63,7 +69,4 @@ public class Buildable {
     public void setY(float y) {
         this.y = y;
     }
-    
-    
-
 }

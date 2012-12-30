@@ -21,6 +21,7 @@ public class GameState extends BasicGameState {
     long next_roll;
     Map _map;
     
+    int resources = 150;
 
     @Override
     public int getID() {

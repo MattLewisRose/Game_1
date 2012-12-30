@@ -14,13 +14,11 @@ public class GameState extends BasicGameState {
     public static final int ID = 1;
     private StateBasedGame game;
     long game_timer = 0;
-    long last_dice_roll = 0;
-    long time_between_roll = 1200;
+    long time_between_roll = 5000;
+    static long next_roll;
     int number_of_rolls = 0;
     int last_dice_roll_count = 0;
-    long next_roll;
     Map _map;
-    
     int resources = 150;
 
     @Override
@@ -29,33 +27,33 @@ public class GameState extends BasicGameState {
 
     }
 
+    public static int getTimeUntilNextDiceroll() {
+        long time_until_tick = next_roll - System.currentTimeMillis();
+        return (int) (time_until_tick / 1000) + 1;
+    }
+
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.game = game;
-        
-        last_dice_roll = System.currentTimeMillis();
-        next_roll = System.currentTimeMillis();
-
         _map = new Map();
+
+        next_roll = System.currentTimeMillis() + time_between_roll;
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
         game_timer += delta;
-        number_of_rolls = (int) (game_timer - (game_timer % 1000)) / 1000;
+        number_of_rolls = (int) ((int) (game_timer - (game_timer % time_between_roll)) / time_between_roll);
         if (number_of_rolls > last_dice_roll_count) {
             // Count this as a tick
-            System.out.println(game_timer + " : " + number_of_rolls);
             last_dice_roll_count++;
+            next_roll = System.currentTimeMillis() + time_between_roll;
         }
 
 
         _map.update(container, game, delta);
-
         Interface.getInstance().update(container, game, delta);
-
-
     }
 
     @Override
@@ -66,9 +64,8 @@ public class GameState extends BasicGameState {
         _map.render(container, game, g);
         Interface.getInstance().render(container, game, g);
 
-        g.setColor(Color.darkGray);
-        g.drawString((game_timer) + "", 100, 150);
         g.drawString("" + number_of_rolls, 100, 100);
+        g.drawString((game_timer) + "", 100, 150);
 
 
     }

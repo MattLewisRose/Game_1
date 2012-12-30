@@ -61,6 +61,7 @@ public class Interface {
                 break;
             case STATE_INGAME:
                 INGAME_background.draw(1024 - INGAME_width, 0);
+                g.drawString("" + GameState.getTimeUntilNextDiceroll(), 950, 745);
                 break;
         }
     }

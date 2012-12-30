@@ -31,6 +31,7 @@ public class MapTile {
 
     int x, y;
     Image _tileImage;
+    boolean buildable = false;
 
     MapTile(int type, int x, int y, SpriteSheet _spriteSheet) {
 
@@ -61,7 +62,7 @@ public class MapTile {
             // Base tile
             case 100:
                 _tileImage = _spriteSheet.getSubImage(0, 1);
-
+                buildable = true;
                 break;
 
             default:

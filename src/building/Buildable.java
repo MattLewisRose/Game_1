@@ -27,8 +27,23 @@ public class Buildable {
     int w, h, cost;
     Image baseImage;
 
-    Buildable() {
+    public static final int BUILDING_BARRACKS = 1;
+    
+    
+    Buildable(int type, int x, int y) {
+        this.x = x;
+        this.y = y;
+        
+        switch(type) {
+            case BUILDING_BARRACKS: 
+                break;
+            
+        }
+        
+        
+    
     }
+    
 
     public int getH() {
         return h;

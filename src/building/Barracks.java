@@ -22,7 +22,9 @@ package building;
 
 public class Barracks extends Buildable implements BuildableInterface {
 
-    Barracks(){
+    public Barracks(int type, int x, int y){
+        super(type, x, y);
+        
 
     }
 

@@ -1,5 +1,7 @@
 package game;
 
+import building.Buildable;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.Color;
@@ -20,6 +22,11 @@ public class GameState extends BasicGameState {
     int last_dice_roll_count = 0;
     Map _map;
     int resources = 150;
+    
+    ArrayList<Buildable> BuildingList = new ArrayList<>();
+    
+    //building.Buildable a = new building.Barracks(building.Buildable.BUILDING_BARRACKS, 50, 50);
+    
 
     @Override
     public int getID() {

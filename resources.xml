@@ -10,6 +10,10 @@
     <resource type="image" id="ingame_background">/data/image/interface/ingame.png</resource>
     <resource type="image" id="ResourceAnimation">/data/image/resource.png</resource>
 
+    	<!-- Interface -->
+    	<resource type="image" id="interface_button_barrack">/data/image/interface/building/barrack.png</resource>
+
+
 
     <!-- Test -->
     <resource type="image" id="testImage">/data/image/testImage.png</resource>

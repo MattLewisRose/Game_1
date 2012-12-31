@@ -56,7 +56,7 @@ public abstract class InterfaceButton {
 
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             if ((mouseX >= x) && (mouseX <= (x + w)) && (mouseY >= y) && (mouseY <= (y + h))) {
-                System.out.println("button pressed");
+                this.onClick();
             }
         }
     }

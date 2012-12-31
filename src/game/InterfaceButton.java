@@ -22,20 +22,31 @@ package game;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class InterfaceButton {
+/**
+ *
+ * @author Harry
+ */
+public abstract class InterfaceButton {
 
     int x, y, w, h;
+    Image buttonImage;
 
-    InterfaceButton() {
-        x = 100;
-        y = 100;
-        w = 160;
-        h = 80;
+    InterfaceButton(String imageName, int x, int y) {
+
+        buttonImage = ResourceManager.getInstance().getImage(imageName);
+
+        this.x = x;
+        this.y = y;
+        this.w = buttonImage.getWidth();
+        this.h = buttonImage.getHeight();
     }
+    
+    abstract void onClick();
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         Input input = container.getInput();
@@ -51,9 +62,8 @@ public class InterfaceButton {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        g.setColor(Color.white);
-        g.fillRect(x, y, w, h);
-        g.setColor(Color.black);
-        g.drawString("This is a button", x + 5, y + 5);
+        buttonImage.draw(x, y);
     }
+
+
 }

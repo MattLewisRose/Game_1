@@ -19,6 +19,9 @@
  */
 package game;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -32,9 +35,18 @@ public class Interface {
     public final static int STATE_INGAME = 1;
     public final static int INGAME_width = 176;
     private Image INGAME_background;
+    ArrayList<InterfaceButton> GameButtons = new ArrayList<>();
 
     private Interface() {
         INGAME_background = ResourceManager.getInstance().getImage("ingame_background");
+
+        GameButtons.add(new InterfaceButton("interface_button_barrack", 880, 85) {
+
+            @Override
+            void onClick() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
     }
 
     public static Interface getInstance() {
@@ -51,7 +63,19 @@ public class Interface {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        
+        switch (state) {
+            case STATE_MAINMENU:
+                break;
+            case STATE_INGAME:
+                INGAME_background.draw(1024 - INGAME_width, 0);
+
+                for (int i = 0; i < GameButtons.size(); i++) {
+                    GameButtons.get(i).update(container, game, delta);
+                }
+                break;
+        }
+
+
 
     }
 
@@ -62,6 +86,11 @@ public class Interface {
             case STATE_INGAME:
                 INGAME_background.draw(1024 - INGAME_width, 0);
                 g.drawString("" + GameState.getTimeUntilNextDiceroll(), 950, 745);
+
+                for (int i = 0; i < GameButtons.size(); i++) {
+                    GameButtons.get(i).render(container, game, g);
+                }
+
                 break;
         }
     }

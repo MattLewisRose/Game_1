@@ -19,6 +19,7 @@
  */
 package mapgen;
 
+import java.awt.Point;
 import java.util.Random;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -33,12 +34,15 @@ public class MapTile {
     float[] light_value;
     Image _tileImage;
     boolean buildable = false;
+    private Point centre;
 
     MapTile(int type, int x, int y, SpriteSheet _spriteSheet) {
 
         this.x = x;
         this.y = y;
         this.light_value = new float[]{0.5f, 0.5f, 0.5f};
+
+        this.centre = new Point(x + (16 / 2), y + (16 / 2));
 
         if (type < 16) {
             _tileImage = _spriteSheet.getSubImage(type, 0);
@@ -88,16 +92,20 @@ public class MapTile {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         _tileImage.draw(x, y);
     }
-    
+
     public float[] getDefaultLight() {
         return this.light_value;
     }
-    
+
     public int getX() {
         return this.x;
     }
-    
+
     public int getY() {
         return this.y;
+    }
+
+    public Point getCentre() {
+        return this.centre;
     }
 }

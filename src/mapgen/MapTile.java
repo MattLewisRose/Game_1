@@ -30,6 +30,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MapTile {
 
     int x, y;
+    float[] light_value;
     Image _tileImage;
     boolean buildable = false;
 
@@ -37,6 +38,8 @@ public class MapTile {
 
         this.x = x;
         this.y = y;
+        this.light_value = new float[]{0.5f, 0.5f, 0.5f};
+
         if (type < 16) {
             _tileImage = _spriteSheet.getSubImage(type, 0);
         }
@@ -57,29 +60,24 @@ public class MapTile {
             case 6:
                 break;
 
-            // From here onwards are specific tiles
+            /*
+             * From here onwards are specific tiles
+             * 
+             */
 
             // Base tile
             case 100:
                 _tileImage = _spriteSheet.getSubImage(0, 1);
                 buildable = true;
+                this.light_value = new float[]{1f, 1f, 1f};
                 break;
+
+
 
             default:
                 //System.out.println("asd2");
                 break;
         }
-
-        /*
-         if (x % 10 < 3) {
-         pickedNumber = rand.nextInt(2);
-         } else {
-         pickedNumber = rand.nextInt(3);
-         }}*/
-
-
-
-        // _tileImage = _spriteSheet.getSubImage(type, 0);
 
 
     }
@@ -89,5 +87,17 @@ public class MapTile {
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         _tileImage.draw(x, y);
+    }
+    
+    public float[] getDefaultLight() {
+        return this.light_value;
+    }
+    
+    public int getX() {
+        return this.x;
+    }
+    
+    public int getY() {
+        return this.y;
     }
 }

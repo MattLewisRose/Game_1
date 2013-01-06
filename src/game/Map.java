@@ -34,8 +34,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Map {
 
     final int tile_size = 16;
-    final int width = (1024 - 176) / tile_size;
-    final int height = 800 / tile_size;
+    final int width = (1024 - 176) / tile_size; // 53
+    final int height = 800 / tile_size; // 50
     SpriteSheet _spriteSheet;
     MapTile[][] map;
     ArrayList<ResourceNode> resourceNodes = new ArrayList<ResourceNode>();
@@ -71,5 +71,9 @@ public class Map {
         for (int i = 0; i < resourceNodes.size(); i++) {
             resourceNodes.get(i).render(container, game, g);
         }
+    }
+    
+    public MapTile[][] getMap() {
+        return this.map;
     }
 }

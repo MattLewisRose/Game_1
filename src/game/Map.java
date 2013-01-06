@@ -39,7 +39,6 @@ public class Map {
     SpriteSheet _spriteSheet;
     private MapTile[][] map;
     ArrayList<ResourceNode> resourceNodes = new ArrayList<ResourceNode>();
-    
     Shader testShader;
     Image testImage;
 
@@ -51,8 +50,8 @@ public class Map {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        map = mapgen.One.create(width, height, tile_size, _spriteSheet);
-        resourceNodes = mapgen.One.createResourceNodes();
+        map = mapgen.a.create(width, height, tile_size, _spriteSheet);
+        resourceNodes = mapgen.a.createResourceNodes();
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -65,14 +64,14 @@ public class Map {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 map[x][y].render(container, game, g);
-                
+
             }
         }
         for (int i = 0; i < resourceNodes.size(); i++) {
             resourceNodes.get(i).render(container, game, g);
         }
     }
-    
+
     public MapTile[][] getMap() {
         return this.map;
     }

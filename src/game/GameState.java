@@ -48,13 +48,13 @@ public class GameState extends BasicGameState {
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.game = game;
         _map = new Map();
+        
         LightManager = new lighting.LightManager(_map.getMap());
 
 
         next_roll = System.currentTimeMillis() + time_between_roll;
 
-        lights.add(new lighting.Light(400, 400, 0.8f, 3f));
-        // lights.add(new lighting.Light(100, 100, 1f, 1f));
+        lights.add(new lighting.Light(400, 400, 0.8f, 3f, 1f));
     }
 
     @Override
@@ -72,8 +72,10 @@ public class GameState extends BasicGameState {
         }
 
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-            lights.add(new lighting.Light(input.getMouseX(), input.getMouseY(), 0.8f, 3f));
+            //lights.add(new lighting.Light(input.getMouseX(), input.getMouseY(), 0.8f, 3f, 1f));
         }
+        
+        lights.get(0).setLocation(input.getMouseX(), input.getMouseY());
 
         for (int i = 0; i < lights.size(); i++) {
             if (i == 0) {
@@ -84,7 +86,10 @@ public class GameState extends BasicGameState {
 
 
         _map.update(container, game, delta);
+        
         Interface.getInstance().update(container, game, delta);
+        
+        LightManager.update(container, game, delta, lights);
     }
 
     @Override
@@ -93,6 +98,9 @@ public class GameState extends BasicGameState {
 
 
         _map.render(container, game, g);
+        
+        LightManager.render(container, g);
+        
         Interface.getInstance().render(container, game, g);
 
         g.drawString("" + number_of_rolls, 100, 100);

@@ -37,7 +37,7 @@ public class Map {
     final int width = (1024 - 176) / tile_size; // 53
     final int height = 800 / tile_size; // 50
     SpriteSheet _spriteSheet;
-    MapTile[][] map;
+    private MapTile[][] map;
     ArrayList<ResourceNode> resourceNodes = new ArrayList<ResourceNode>();
     
     Shader testShader;

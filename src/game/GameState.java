@@ -1,12 +1,17 @@
 package game;
 
 import building.Buildable;
+import java.awt.GradientPaint;
+import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lighting.Light;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,12 +27,12 @@ public class GameState extends BasicGameState {
     int last_dice_roll_count = 0;
     Map _map;
     int resources = 150;
-    
+    lighting.LightManager LightManager;
+    ArrayList<Light> lights = new ArrayList<>();
+    //private Color sharedColor = new Color(1f, 1f, 1f, 1f);
     ArrayList<Buildable> BuildingList = new ArrayList<>();
-    
-    //building.Buildable a = new building.Barracks(building.Buildable.BUILDING_BARRACKS, 50, 50);
-    
 
+    //building.Buildable a = new building.Barracks(building.Buildable.BUILDING_BARRACKS, 50, 50);
     @Override
     public int getID() {
         return ID;
@@ -43,12 +48,20 @@ public class GameState extends BasicGameState {
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.game = game;
         _map = new Map();
+        LightManager = new lighting.LightManager(_map.getMap());
+
 
         next_roll = System.currentTimeMillis() + time_between_roll;
+
+        lights.add(new lighting.Light(400, 400, 0.8f, 3f));
+        // lights.add(new lighting.Light(100, 100, 1f, 1f));
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+
+        Input input = container.getInput();
+
 
         game_timer += delta;
         number_of_rolls = (int) ((int) (game_timer - (game_timer % time_between_roll)) / time_between_roll);
@@ -57,6 +70,17 @@ public class GameState extends BasicGameState {
             last_dice_roll_count++;
             next_roll = System.currentTimeMillis() + time_between_roll;
         }
+
+        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            lights.add(new lighting.Light(input.getMouseX(), input.getMouseY(), 0.8f, 3f));
+        }
+
+        for (int i = 0; i < lights.size(); i++) {
+            if (i == 0) {
+                lights.get(i).setLocation(input.getMouseX(), input.getMouseY());
+            }
+        }
+
 
 
         _map.update(container, game, delta);
@@ -76,4 +100,46 @@ public class GameState extends BasicGameState {
 
 
     }
+    /*
+     @Override
+     public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {
+
+
+     for (int i = 0; i < lights.size(); i++) {
+     Light light = lights.get(i);
+
+     g.setDrawMode(Graphics.MODE_ALPHA_MAP);
+     //g.clearAlphaMap();
+
+     int alphaW = (int) (alphaMap.getWidth() * light.scale);
+     int alphaH = (int) (alphaMap.getHeight() * light.scale);
+     int alphaX = (int) (light.x - alphaW / 2f);
+     int alphaY = (int) (light.y - alphaH / 2f);
+
+     alphaMap.draw(alphaX, alphaY, alphaW, alphaH);
+
+     g.setDrawMode(Graphics.MODE_ALPHA_BLEND);
+
+     //we'll clip to the alpha rectangle, since anything outside of it will be transparent
+     g.setClip(alphaX, alphaY, alphaW, alphaH);
+     light.getTint().bind();
+
+     // Draw goes here
+     _map.render(container, game, g);
+
+
+     g.clearClip();
+     }
+
+     //reset the mode to normal before continuing..
+
+     g.setDrawMode(Graphics.MODE_NORMAL);
+
+
+     Interface.getInstance().render(container, game, g);
+
+     g.setColor(Color.white);
+     g.drawString("(" + lights.size() + ")", 10, 25);
+
+     }*/
 }

@@ -36,14 +36,14 @@ public class LightManager {
     float[][][] default_light_value;
     float[][][] calculated_light_value;
 
+    // Maps is 53x50
     public LightManager(mapgen.MapTile[][] tile) {
 
-        default_light_value = new float[50][53][];
+        default_light_value = new float[53][50][];
 
-        for (int y = 0; y < 49; y++) {
-            for (int x = 0; x < 52; x++) {
-                //default_light_value[x][y] = tile[x][y].getDefaultLight();
-                default_light_value[x][y] = new float[]{1f, 1f, 1f};
+        for (int y = 0; y < 50; y++) {
+            for (int x = 0; x < 53; x++) {
+                default_light_value[x][y] = tile[x][y].getDefaultLight();
             }
         }
 
@@ -54,15 +54,46 @@ public class LightManager {
         // get x,y from 'tile', then update the default_light_value for it
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta, mapgen.MapTile[][] map) throws SlickException {
+    public void update(GameContainer container, StateBasedGame game, int delta, ArrayList<Light> lights) throws SlickException {
+
+        calculated_light_value = default_light_value;
+        this.lights = lights;
+
+
+
+
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
 
-        g.setDrawMode(Graphics.MODE_ALPHA_BLEND);
+        // g.setDrawMode(Graphics.MODE_ALPHA_BLEND);
 
 
 
+        for (int y = 0; y < 50; y++) {
+            for (int x = 0; x < 53; x++) {
+
+                g.setColor(Color.black);
+                float value = default_light_value[x][y][0];
+                String str = "a";
+                if (value == 0.5f) {
+                    str = "0";
+                } else {
+                    str = "1";
+                }
+
+                g.drawString(str, (x * 16) + 3, (y * 16) + 0);
+
+            }
+        }
+
+        System.out.println(lights.size());
+
+        for (int i = 0; i<lights.size(); i++) {
+            Light light = lights.get(i);
+            g.drawOval(light.x, light.y, light.size, light.size);
+        }
+   
 
         g.setDrawMode(Graphics.MODE_NORMAL);
     }

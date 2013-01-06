@@ -17,7 +17,6 @@
  *
  *
  */
-
 package lighting;
 
 import org.newdawn.slick.Color;
@@ -25,28 +24,25 @@ import org.newdawn.slick.Color;
 public class Light {
 
     public Color colour;
-    public float x, y, alpha, scale;
-    
-    
-    
-    public Light(float x, float y, float alpha, float scale){
-       this.x = x;
-       this.y = y;
-       this.alpha = alpha;
-       this.scale = scale;
-       
-      // this.colour = new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255);
-       this.colour = Color.blue;
-      
+    public float x, y, alpha, strength, size;
+
+    public Light(float x, float y, float alpha, float scale, float strength) {
+
+        this.alpha = alpha;
+        this.size = scale * 50f;
+        this.x = x - (this.size / 2);
+        this.y = y - (this.size / 2);
+        // this.colour = new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255);
+        this.colour = Color.blue;
+
     }
 
     public void setLocation(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.x = x - (this.size / 2);
+        this.y = y - (this.size / 2);
     }
 
     public Color getTint() {
         return colour;
     }
-    
 }

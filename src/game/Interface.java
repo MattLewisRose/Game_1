@@ -19,12 +19,15 @@
  */
 package game;
 
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -36,17 +39,17 @@ public class Interface {
     public final static int INGAME_width = 176;
     private Image INGAME_background;
     ArrayList<InterfaceButton> GameButtons = new ArrayList<>();
+    private Component frame;
 
     private Interface() {
         INGAME_background = ResourceManager.getInstance().getImage("ingame_background");
 
-        GameButtons.add(new InterfaceButton("interface_button_barrack", 880, 85) {
-
-            @Override
-            void onClick() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
+        //   GameButtons.add(new InterfaceButton("interface_button_barrack", 880, 85) {
+        //       @Override
+        //       void onClick() {
+        //          System.out.println("Create new barracks, button.");
+        //      }
+        //   });
     }
 
     public static Interface getInstance() {
@@ -63,15 +66,20 @@ public class Interface {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+
+        Input input = container.getInput();
+        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+
+            //JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+        }
         switch (state) {
             case STATE_MAINMENU:
                 break;
             case STATE_INGAME:
-                INGAME_background.draw(1024 - INGAME_width, 0);
+                //  for (int i = 0; i < GameButtons.size(); i++) {
+                //      GameButtons.get(i).update(container, game, delta);
+                //  }
 
-                for (int i = 0; i < GameButtons.size(); i++) {
-                    GameButtons.get(i).update(container, game, delta);
-                }
                 break;
         }
 

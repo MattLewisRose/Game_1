@@ -36,7 +36,6 @@ public class GameState extends BasicGameState {
     @Override
     public int getID() {
         return ID;
-
     }
 
     public static int getTimeUntilNextDiceroll() {
@@ -48,11 +47,12 @@ public class GameState extends BasicGameState {
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         this.game = game;
         _map = new Map();
-        
+
         LightManager = new lighting.LightManager(_map.getMap());
 
-
         next_roll = System.currentTimeMillis() + time_between_roll;
+
+        lights.add(new lighting.Light(400, 400, 0.8f, 3f, 1f));
 
         lights.add(new lighting.Light(400, 400, 0.8f, 3f, 1f));
     }
@@ -71,24 +71,29 @@ public class GameState extends BasicGameState {
             next_roll = System.currentTimeMillis() + time_between_roll;
         }
 
-        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-            //lights.add(new lighting.Light(input.getMouseX(), input.getMouseY(), 0.8f, 3f, 1f));
-        }
-        
+        //if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+        //lights.add(new lighting.Light(input.getMouseX(), input.getMouseY(), 0.8f, 3f, 1f));
+        //    System.out.println("Mousepress");
+        //}
+
         lights.get(0).setLocation(input.getMouseX(), input.getMouseY());
 
         for (int i = 0; i < lights.size(); i++) {
             if (i == 0) {
                 lights.get(i).setLocation(input.getMouseX(), input.getMouseY());
+            } else {
+                double  x = (Math.cos(System.currentTimeMillis()));
+                int y = 200;
+                System.out.println(x);
+                //  lights.get(i).setLocation(x, y);
             }
         }
 
 
-
         _map.update(container, game, delta);
-        
+
         Interface.getInstance().update(container, game, delta);
-        
+
         LightManager.update(container, game, delta, lights);
     }
 
@@ -98,13 +103,10 @@ public class GameState extends BasicGameState {
 
 
         _map.render(container, game, g);
-        
-        LightManager.render(container, g);
-        
-        Interface.getInstance().render(container, game, g);
 
-        g.drawString("" + number_of_rolls, 100, 100);
-        g.drawString((game_timer) + "", 100, 150);
+        LightManager.render(container, g);
+
+        Interface.getInstance().render(container, game, g);
 
 
     }

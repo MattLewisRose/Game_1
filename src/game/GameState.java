@@ -54,7 +54,7 @@ public class GameState extends BasicGameState {
 
         lights.add(new lighting.Light(400, 400, 0.8f, 3f, 1f));
 
-        lights.add(new lighting.Light(400, 400, 0.8f, 3f, 1f));
+        lights.add(new lighting.Light(0, 0, 0.8f, 3f, 1f));
     }
 
     @Override
@@ -71,21 +71,13 @@ public class GameState extends BasicGameState {
             next_roll = System.currentTimeMillis() + time_between_roll;
         }
 
-        //if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-        //lights.add(new lighting.Light(input.getMouseX(), input.getMouseY(), 0.8f, 3f, 1f));
-        //    System.out.println("Mousepress");
-        //}
-
         lights.get(0).setLocation(input.getMouseX(), input.getMouseY());
 
         for (int i = 0; i < lights.size(); i++) {
             if (i == 0) {
                 lights.get(i).setLocation(input.getMouseX(), input.getMouseY());
             } else {
-                double  x = (Math.cos(System.currentTimeMillis()));
-                int y = 200;
-                System.out.println(x);
-                //  lights.get(i).setLocation(x, y);
+             
             }
         }
 

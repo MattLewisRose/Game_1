@@ -20,21 +20,25 @@
 package lighting;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.geom.Ellipse;
+import org.newdawn.slick.geom.Shape;
+
 
 public class Light {
 
     public Color colour;
     public float x, y, alpha, strength, size;
-
+    private Shape hitbox;
+    
     public Light(float x, float y, float alpha, float scale, float strength) {
 
         this.alpha = alpha;
-        this.size = scale * 50f;
-        this.x = x - (this.size / 2);
-        this.y = y - (this.size / 2);
+        this.size = scale * 25f;
+        this.x = x;
+        this.y = y;
         // this.colour = new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255);
         this.colour = Color.blue;
-
+        this.hitbox = new Ellipse(x, y, size, size, 6);
     }
 
     public void setLocation(int x, int y) {
@@ -45,4 +49,15 @@ public class Light {
     public Color getTint() {
         return colour;
     }
+    
+    public Shape getHitbox() {
+        return this.hitbox;
+    }
+    
+    public void setHitboxLocation(int x, int y) {
+        this.hitbox.setX(x);
+        this.hitbox.setY(y);
+    }
+    
+    
 }

@@ -40,6 +40,8 @@ public class LightManager {
     Shape circle = new Ellipse(0f, 0f, 40f, 40f, 6);
     Shape[][] test; // The hitboxes for each square
     mapgen.MapTile[][] tiles;
+    
+    float step;
 
     // Maps is 53x50
     public LightManager(mapgen.MapTile[][] tile) {
@@ -79,14 +81,23 @@ public class LightManager {
         this.lights = lights;
 
         Input input = container.getInput();
-        circle.setLocation(input.getMouseX() - 10f, input.getMouseY() - 10f);
+        lights.get(1).setHitboxLocation((int) (input.getMouseX() - 10f), (int) (input.getMouseY() - 10f));
 
-
+        // Temporary to show the dynamically moving light.
+        step += 0.0025;
+        step %= 1;
+        int newx = (int) (-1 * Math.sin(step) * 500)  + 600;
+        int newy = (int) ((int) (-1 * Math.sin(step) * 500) * 0.5  + 400);      
+        lights.get(0).setHitboxLocation((int)newx, (int) newy);
+        
 
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 53; x++) {
-                if (circle.contains(test[x][y])) {
-                    calculated_light_value[x][y][0] = 2f;
+                for (int i = 0; i < lights.size(); i++) {
+                    Shape tmp = lights.get(i).getHitbox();
+                    if (tmp.contains(test[x][y])) {
+                        calculated_light_value[x][y][0] = 2f;
+                    }
                 }
             }
         }
@@ -95,9 +106,6 @@ public class LightManager {
     public void render(GameContainer container, Graphics g) throws SlickException {
 
         //g.setDrawMode(Graphics.MODE_ALPHA_BLEND);
-
-
-        g.fill(circle);
 
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 53; x++) {
@@ -118,8 +126,9 @@ public class LightManager {
         }
 
         for (int i = 0; i < lights.size(); i++) {
-            Light light = lights.get(i);
-            g.drawOval(light.x, light.y, light.size, light.size);
+            Shape tmp = lights.get(i).getHitbox();
+            g.draw(tmp);
+
         }
 
         g.setDrawMode(Graphics.MODE_NORMAL);

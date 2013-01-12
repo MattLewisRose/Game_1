@@ -73,7 +73,7 @@ public class MapTile {
             case 100:
                 _tileImage = _spriteSheet.getSubImage(0, 1);
                 buildable = true;
-                this.light_value = new float[]{1f, 1f, 1f};
+                this.light_value = new float[]{2f, 1f, 1f};
                 break;
 
 

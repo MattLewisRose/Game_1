@@ -45,7 +45,7 @@ public abstract class InterfaceButton {
         this.w = buttonImage.getWidth();
         this.h = buttonImage.getHeight();
     }
-    
+
     abstract void onClick();
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -54,17 +54,12 @@ public abstract class InterfaceButton {
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
 
-        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-            if ((mouseX >= x) && (mouseX <= (x + w)) && (mouseY >= y) && (mouseY <= (y + h))) {
-                this.onClick();
-                System.out.println("clicked");
-            }
+        if ((mouseX >= x) && (mouseX <= (x + w)) && (mouseY >= y) && (mouseY <= (y + h))) {
+            this.onClick();
         }
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         buttonImage.draw(x, y);
     }
-
-
 }

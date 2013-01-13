@@ -31,6 +31,7 @@ public class GameState extends BasicGameState {
     ArrayList<Light> lights = new ArrayList<>();
     //private Color sharedColor = new Color(1f, 1f, 1f, 1f);
     ArrayList<Buildable> BuildingList = new ArrayList<>();
+    Interface game_interface;
 
     //building.Buildable a = new building.Barracks(building.Buildable.BUILDING_BARRACKS, 50, 50);
     @Override
@@ -53,8 +54,10 @@ public class GameState extends BasicGameState {
         next_roll = System.currentTimeMillis() + time_between_roll;
 
         lights.add(new lighting.Light(400, 400, 0.8f, 3f, 1f));
-
         lights.add(new lighting.Light(0, 0, 0.8f, 3f, 1f));
+
+        game_interface = new Interface();
+
     }
 
     @Override
@@ -77,14 +80,13 @@ public class GameState extends BasicGameState {
             if (i == 0) {
                 lights.get(i).setLocation(input.getMouseX(), input.getMouseY());
             } else {
-             
             }
         }
 
 
         _map.update(container, game, delta);
 
-        Interface.getInstance().update(container, game, delta);
+        game_interface.update(container, game, delta);
 
         LightManager.update(container, game, delta, lights);
     }
@@ -98,7 +100,7 @@ public class GameState extends BasicGameState {
 
         LightManager.render(container, g);
 
-        Interface.getInstance().render(container, game, g);
+        game_interface.render(container, game, g);
 
 
     }

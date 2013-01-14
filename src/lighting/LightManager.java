@@ -35,8 +35,8 @@ import org.newdawn.slick.geom.Rectangle;
 public class LightManager {
     
     ArrayList<Light> lights = new ArrayList<>();
-    float[][][] default_light_value;
-    float[][][] calculated_light_value;
+    float[][] default_light_value;
+    float[][] calculated_light_value;
     Shape circle = new Ellipse(0f, 0f, 40f, 40f, 6);
     Shape[][] test; // The hitboxes for each square
     mapgen.MapTile[][] tiles;
@@ -45,14 +45,14 @@ public class LightManager {
     // Maps is 53x50
     public LightManager(mapgen.MapTile[][] tile) {
         
-        default_light_value = new float[53][50][];
+        default_light_value = new float[53][50];
         tiles = tile;
         
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 53; x++) {
                 default_light_value[x][y] = tile[x][y].getDefaultLight();
-                if (default_light_value[x][y][0] == 2f) {
-                    System.out.print("ermagoos");
+                if (default_light_value[x][y] == 2f) {
+                    
                 }
             }
         }
@@ -69,15 +69,18 @@ public class LightManager {
     
     public void UpdateDefaultTile(mapgen.MapTile tile) {
         // get x,y from 'tile', then update the default_light_value for it
+        
     }
     
     public void update(GameContainer container, StateBasedGame game, int delta, ArrayList<Light> lights) throws SlickException {
         
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 53; x++) {
-                default_light_value[x][y][0] = 0;
+                default_light_value[x][y] = tiles[x][y].getDefaultLight();
+                
             }
         }
+        
         
         calculated_light_value = default_light_value;
         this.lights = lights;
@@ -98,7 +101,7 @@ public class LightManager {
                 for (int i = 0; i < lights.size(); i++) {
                     Shape tmp = lights.get(i).getHitbox();
                     if (tmp.contains(test[x][y])) {
-                        calculated_light_value[x][y][0] = 2f;
+                        calculated_light_value[x][y] = 2f;
                     }
                 }
             }
@@ -112,7 +115,7 @@ public class LightManager {
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 53; x++) {
                 g.setColor(Color.black);
-                float value = default_light_value[x][y][0];
+                float value = default_light_value[x][y];
                 String str = "a";
                 if (value == 0.5f) {
                     str = "0";
@@ -129,10 +132,9 @@ public class LightManager {
         
         for (int i = 0; i < lights.size(); i++) {
             Shape tmp = lights.get(i).getHitbox();
-            g.draw(tmp);
-            
+            g.draw(tmp); 
         }
         
-        g.setDrawMode(Graphics.MODE_NORMAL);
+        //g.setDrawMode(Graphics.MODE_NORMAL);
     }
 }

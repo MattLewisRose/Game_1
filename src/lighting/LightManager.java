@@ -19,7 +19,6 @@
  */
 package lighting;
 
-import java.awt.geom.Area;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -27,16 +26,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Ellipse;
-import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.geom.Rectangle;
 
 public class LightManager {
 
     private boolean numbers_on = false;
     private boolean lighting_on = false;
-    
     ArrayList<Light> lights = new ArrayList<>();
     float[][] default_light_value;
     float[][] calculated_light_value;
@@ -131,7 +128,7 @@ public class LightManager {
         }
         for (int i = 0; i < lights.size(); i++) {
             Shape tmp = lights.get(i).getHitbox();
-            g.draw(tmp);
+           // g.draw(tmp);
         }
 
         if (lighting_on) {
@@ -142,7 +139,7 @@ public class LightManager {
                     } else {
                         // No light
                         g.fillRect(x * 16, y * 16, 16, 16);
-                        
+
                     }
                 }
             }

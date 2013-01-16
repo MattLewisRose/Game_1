@@ -38,7 +38,7 @@ public class Light {
         this.y = y;
         // this.colour = new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255);
         this.colour = Color.blue;
-        this.hitbox = new Ellipse(x, y, size, size, 6);
+        this.hitbox = new Ellipse(x, y, size, size, 12);
     }
 
     public void setLocation(int x, int y) {

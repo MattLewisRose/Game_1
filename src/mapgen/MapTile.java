@@ -30,10 +30,10 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MapTile {
 
-    int x, y;
-    float light_value;
-    Image _tileImage;
-    boolean buildable = false;
+    private int x, y;
+    private float light_value;
+    private Image _tileImage;
+    private boolean buildable = false;
     private Point centre;
 
     MapTile(int type, int x, int y, SpriteSheet _spriteSheet) {
@@ -97,6 +97,10 @@ public class MapTile {
         return this.light_value;
     }
 
+    public void setDefaultLight(float value) {
+        this.light_value = value;
+    }
+    
     public int getX() {
         return this.x;
     }

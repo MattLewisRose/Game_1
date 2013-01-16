@@ -64,7 +64,7 @@ public class a {
         for (int y = 2; y < (2 + base_height); y++) {
             for (int x = 37; x < 37 + base_width; x++) {
                 result[x][y] = new MapTile(MAP.TILE_BASE_GROUND, x * tile_size, y * tile_size, _spriteSheet);
-
+                result[x][y].setDefaultLight(0f); // So we can't see the enemy's base
             }
         }
 

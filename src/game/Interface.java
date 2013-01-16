@@ -29,6 +29,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Interface {
@@ -36,6 +38,11 @@ public class Interface {
     public final static int INGAME_width = 176;
     private Image INGAME_background;
     ArrayList<InterfaceButton> GameButtons = new ArrayList<>();
+    public final static int MOUSE_STATE_EMPTY = 0;
+    public final static int MOUSE_STATE_ATTACK = 1;
+    public final static int MOUSE_STATE_BUILD_BARRACKS = 10;
+    int mouse_state = 0;
+    Shape test;
 
     Interface() {
         INGAME_background = ResourceManager.getInstance().getImage("ingame_background");
@@ -44,6 +51,8 @@ public class Interface {
             @Override
             void onClick() {
                 System.out.println("Create new barracks, button.");
+                
+                mouse_state = MOUSE_STATE_BUILD_BARRACKS;
             }
         });
     }
@@ -57,8 +66,28 @@ public class Interface {
             }
         }
 
+        switch (mouse_state) {
+            case MOUSE_STATE_EMPTY:
+                break;
+            case MOUSE_STATE_ATTACK:
+                // Set mouse icon to the attack icon animation
+                break;
+
+            case MOUSE_STATE_BUILD_BARRACKS:
+                // Set the barracks icon underneath the mouse until clicked
+
+                //psuedo
+                // barracks picture = mouse co-ords
+                // if mouse clicked -> Check if it's a buildable slot
+                // if it's buildable, place the building
+                // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
+
+                test = new Rectangle(input.getMouseX() - 8, input.getMouseY() - 10, 16, 16);
+
+                break;
 
 
+        }
 
     }
 
@@ -69,6 +98,29 @@ public class Interface {
 
         for (int i = 0; i < GameButtons.size(); i++) {
             GameButtons.get(i).render(container, game, g);
+        }
+
+        switch (mouse_state) {
+            case MOUSE_STATE_EMPTY:
+                break;
+            case MOUSE_STATE_ATTACK:
+                // Set mouse icon to the attack icon animation
+                break;
+
+            case MOUSE_STATE_BUILD_BARRACKS:
+                // Set the barracks icon underneath the mouse until clicked
+
+                //psuedo
+                // barracks picture = mouse co-ords
+                // if mouse clicked -> Check if it's a buildable slot
+                // if it's buildable, place the building
+                // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
+
+                g.fill(test);
+
+                break;
+
+
         }
 
     }

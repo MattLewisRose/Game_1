@@ -26,7 +26,6 @@ import org.newdawn.slick.geom.Shape;
 
 public class Light {
 
-    public Color colour;
     public float x, y, alpha, strength, size;
     private Shape hitbox;
     
@@ -36,18 +35,12 @@ public class Light {
         this.size = scale * 25f;
         this.x = x;
         this.y = y;
-        // this.colour = new Color((int) Math.random() * 255, (int) Math.random() * 255, (int) Math.random() * 255);
-        this.colour = Color.blue;
         this.hitbox = new Ellipse(x, y, size, size, 12);
     }
 
     public void setLocation(int x, int y) {
         this.x = x - (this.size / 2);
         this.y = y - (this.size / 2);
-    }
-
-    public Color getTint() {
-        return colour;
     }
     
     public Shape getHitbox() {

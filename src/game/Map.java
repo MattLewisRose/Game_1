@@ -39,8 +39,7 @@ public class Map {
     SpriteSheet _spriteSheet;
     private MapTile[][] map;
     ArrayList<ResourceNode> resourceNodes = new ArrayList<ResourceNode>();
-    Shader testShader;
-    Image testImage;
+
 
     Map() {
         Image a = ResourceManager.getInstance().getImage("map_1");

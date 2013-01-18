@@ -146,4 +146,9 @@ public class GameState extends BasicGameState {
      g.drawString("(" + lights.size() + ")", 10, 25);
 
      }*/
+    
+    public void addBuilding(building.Buildable building) {
+        BuildingList.add(building);
+    }
+    
 }

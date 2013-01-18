@@ -19,11 +19,7 @@
  */
 package game;
 
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -51,44 +47,59 @@ public class Interface {
             @Override
             void onClick() {
                 System.out.println("Create new barracks, button.");
-                
                 mouse_state = MOUSE_STATE_BUILD_BARRACKS;
             }
         });
+
+        test = new Rectangle(0, 0, 0, 0);
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
         Input input = container.getInput();
+
+        boolean isLeftMouseClicked = false;
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            isLeftMouseClicked = true;
+        }
+
+        if (isLeftMouseClicked) {
             for (int i = 0; i < GameButtons.size(); i++) {
                 GameButtons.get(i).update(container, game, delta);
             }
         }
+        
+        if (isLeftMouseClicked) {
+            int mouseX = input.getMouseX();
+            int mouseY = input.getMouseY();
+            switch (mouse_state) {
+                case MOUSE_STATE_EMPTY:
+                    break;
+                case MOUSE_STATE_ATTACK:
+                    // Set mouse icon to the attack icon animation
+                    break;
 
-        switch (mouse_state) {
-            case MOUSE_STATE_EMPTY:
-                break;
-            case MOUSE_STATE_ATTACK:
-                // Set mouse icon to the attack icon animation
-                break;
+                case MOUSE_STATE_BUILD_BARRACKS:
+                    // Set the barracks icon underneath the mouse until clicked
 
-            case MOUSE_STATE_BUILD_BARRACKS:
-                // Set the barracks icon underneath the mouse until clicked
+                    //psuedo
+                    // barracks picture = mouse co-ords
+                    // if mouse clicked -> Check if it's a buildable slot
+                    // if it's buildable, place the building
+                    // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
 
-                //psuedo
-                // barracks picture = mouse co-ords
-                // if mouse clicked -> Check if it's a buildable slot
-                // if it's buildable, place the building
-                // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
+                    test = new Rectangle(input.getMouseX() - 8, input.getMouseY() - 10, 16, 16);
 
-                test = new Rectangle(input.getMouseX() - 8, input.getMouseY() - 10, 16, 16);
-
-                break;
-
+                    if ((mouseX >= 0) && (mouseX <= 848) && (mouseY >= 0) && (mouseY <= 800)) {
+                        // Input.MOUSE_LEFT_BUTTON -> Doesn't work, MOUSE_RIGHT_BUTTON however does work
+                        test = new Rectangle(500, 500, 200, 12006);
+                        mouse_state = MOUSE_STATE_EMPTY;
+                        System.out.println("asd");
+                    }
+                    break;
+            }
 
         }
-
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -116,12 +127,12 @@ public class Interface {
                 // if it's buildable, place the building
                 // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
 
-                g.fill(test);
+
 
                 break;
 
 
         }
-
+        g.fill(test);
     }
 }

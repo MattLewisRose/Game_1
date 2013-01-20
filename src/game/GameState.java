@@ -104,48 +104,7 @@ public class GameState extends BasicGameState {
 
 
     }
-    /*
-     @Override
-     public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {
 
-
-     for (int i = 0; i < lights.size(); i++) {
-     Light light = lights.get(i);
-
-     g.setDrawMode(Graphics.MODE_ALPHA_MAP);
-     //g.clearAlphaMap();
-
-     int alphaW = (int) (alphaMap.getWidth() * light.scale);
-     int alphaH = (int) (alphaMap.getHeight() * light.scale);
-     int alphaX = (int) (light.x - alphaW / 2f);
-     int alphaY = (int) (light.y - alphaH / 2f);
-
-     alphaMap.draw(alphaX, alphaY, alphaW, alphaH);
-
-     g.setDrawMode(Graphics.MODE_ALPHA_BLEND);
-
-     //we'll clip to the alpha rectangle, since anything outside of it will be transparent
-     g.setClip(alphaX, alphaY, alphaW, alphaH);
-     light.getTint().bind();
-
-     // Draw goes here
-     _map.render(container, game, g);
-
-
-     g.clearClip();
-     }
-
-     //reset the mode to normal before continuing..
-
-     g.setDrawMode(Graphics.MODE_NORMAL);
-
-
-     Interface.getInstance().render(container, game, g);
-
-     g.setColor(Color.white);
-     g.drawString("(" + lights.size() + ")", 10, 25);
-
-     }*/
     
     public void addBuilding(building.Buildable building) {
         BuildingList.add(building);

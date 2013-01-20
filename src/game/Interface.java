@@ -20,6 +20,8 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -38,25 +40,37 @@ public class Interface {
     public final static int MOUSE_STATE_ATTACK = 1;
     public final static int MOUSE_STATE_BUILD_BARRACKS = 10;
     int mouse_state = 0;
-    Shape test;
+    int mouseX = 0;
+    int mouseY = 0;
+    int imageX = 0;
+    int imageY = 0;
+    Image mouseImage;
+    Shape[][] buildableArea = new Shape[14][10];
 
     Interface() {
         INGAME_background = ResourceManager.getInstance().getImage("ingame_background");
 
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 14; x++) {
+                buildableArea[x][y] = new Rectangle((2 * 16) + (x * 16) + 8, (38 * 16) + (y * 16) + 8, 3, 3);
+            }
+        }
+
         GameButtons.add(new InterfaceButton("interface_button_barrack", 880, 85) {
             @Override
             void onClick() {
-                System.out.println("Create new barracks, button.");
                 mouse_state = MOUSE_STATE_BUILD_BARRACKS;
             }
         });
 
-        test = new Rectangle(0, 0, 0, 0);
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
         Input input = container.getInput();
+        mouseX = input.getMouseX();
+        mouseY = input.getMouseY();
+
 
         boolean isLeftMouseClicked = false;
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -68,10 +82,8 @@ public class Interface {
                 GameButtons.get(i).update(container, game, delta);
             }
         }
-        
+
         if (isLeftMouseClicked) {
-            int mouseX = input.getMouseX();
-            int mouseY = input.getMouseY();
             switch (mouse_state) {
                 case MOUSE_STATE_EMPTY:
                     break;
@@ -80,26 +92,23 @@ public class Interface {
                     break;
 
                 case MOUSE_STATE_BUILD_BARRACKS:
-                    // Set the barracks icon underneath the mouse until clicked
-
-                    //psuedo
-                    // barracks picture = mouse co-ords
-                    // if mouse clicked -> Check if it's a buildable slot
-                    // if it's buildable, place the building
-                    // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
-
-                    test = new Rectangle(input.getMouseX() - 8, input.getMouseY() - 10, 16, 16);
+                    mouseImage = ResourceManager.getInstance().getImage("ingame_building_barrack");
 
                     if ((mouseX >= 0) && (mouseX <= 848) && (mouseY >= 0) && (mouseY <= 800)) {
                         // Input.MOUSE_LEFT_BUTTON -> Doesn't work, MOUSE_RIGHT_BUTTON however does work
-                        test = new Rectangle(500, 500, 200, 12006);
+                        // test = new Rectangle(500, 500, 200, 12006);
                         mouse_state = MOUSE_STATE_EMPTY;
-                        System.out.println("asd");
+                        mouseImage = new Image(1, 1);
                     }
                     break;
             }
-
         }
+        
+        Shape temp = getClosestTile();
+        imageX = (int) temp.getX();
+        imageY = (int) temp.getY();
+        
+
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -126,13 +135,40 @@ public class Interface {
                 // if mouse clicked -> Check if it's a buildable slot
                 // if it's buildable, place the building
                 // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
-
-
-
+                mouseImage.draw(imageX - 8, imageY - 8);
                 break;
-
-
         }
-        g.fill(test);
+
+
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 14; x++) {
+                g.fill(buildableArea[x][y]);
+            }
+        }
+
+    }
+
+    private Shape getClosestTile() {
+        Shape result = null;
+        Shape last = null;
+        float lastDistance = 500000000;
+
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 14; x++) {
+                int tileX = (int) buildableArea[x][y].getX();
+                int tileY = (int) buildableArea[x][y].getY();
+                float xx = (float) Math.pow(mouseX - tileX, 2);
+                float yy = (float) Math.pow(mouseY - tileY, 2);
+                float distance = (float) Math.sqrt(xx + yy);
+                
+                if (distance < lastDistance) {
+                    lastDistance = distance;
+                    last = buildableArea[x][y];
+                }
+            }
+        }
+
+        result = last;
+        return result;
     }
 }

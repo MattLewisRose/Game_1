@@ -13,6 +13,9 @@
     	<!-- Interface -->
     	<resource type="image" id="interface_button_barrack">/data/image/interface/building/barrack.png</resource>
 
+        <!-- Building -->
+        <resource type="image" id="ingame_building_barrack">/data/image/building/barrack.png</resource>
+   
 
 
     <!-- Test -->

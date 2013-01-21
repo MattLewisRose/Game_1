@@ -46,12 +46,16 @@ public class Interface {
     int imageY = 0;
     Image mouseImage;
     Shape[][] buildableArea = new Shape[14][10];
+    boolean[][] builtArea = new boolean[14][10];
+    int buildingLocationValueInArray_X = 0; // Used to set the builtArea location
+    int buildingLocationValueInArray_Y = 0; // Used to set the builtArea location
 
     Interface() {
         INGAME_background = ResourceManager.getInstance().getImage("ingame_background");
 
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 14; x++) {
+                builtArea[x][y] = false;
                 buildableArea[x][y] = new Rectangle((2 * 16) + (x * 16) + 8, (38 * 16) + (y * 16) + 8, 3, 3);
             }
         }
@@ -95,19 +99,21 @@ public class Interface {
                     mouseImage = ResourceManager.getInstance().getImage("ingame_building_barrack");
 
                     if ((mouseX >= 0) && (mouseX <= 848) && (mouseY >= 0) && (mouseY <= 800)) {
-                        // Input.MOUSE_LEFT_BUTTON -> Doesn't work, MOUSE_RIGHT_BUTTON however does work
-                        // test = new Rectangle(500, 500, 200, 12006);
                         mouse_state = MOUSE_STATE_EMPTY;
-                        mouseImage = new Image(1, 1);
+                        //mouseImage = new Image(1, 1);
+                        Shape temp = getClosestTile();
+
+                        builtArea[buildingLocationValueInArray_X][buildingLocationValueInArray_Y] = true;
+                        GameState.addBuilding(new building.Barracks(building.Buildable.BUILDING_BARRACKS, (int) temp.getX() - 8, (int) temp.getY() - 8));
                     }
                     break;
             }
         }
-        
+
         Shape temp = getClosestTile();
         imageX = (int) temp.getX();
         imageY = (int) temp.getY();
-        
+
 
     }
 
@@ -128,13 +134,6 @@ public class Interface {
                 break;
 
             case MOUSE_STATE_BUILD_BARRACKS:
-                // Set the barracks icon underneath the mouse until clicked
-
-                //psuedo
-                // barracks picture = mouse co-ords
-                // if mouse clicked -> Check if it's a buildable slot
-                // if it's buildable, place the building
-                // if it's not buildable, set mouse state to MOUSE_STATE_EMPTY
                 mouseImage.draw(imageX - 8, imageY - 8);
                 break;
         }
@@ -142,7 +141,7 @@ public class Interface {
 
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 14; x++) {
-                g.fill(buildableArea[x][y]);
+                //g.fill(buildableArea[x][y]);
             }
         }
 
@@ -150,25 +149,28 @@ public class Interface {
 
     private Shape getClosestTile() {
         Shape result = null;
-        Shape last = null;
         float lastDistance = 500000000;
+
 
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 14; x++) {
-                int tileX = (int) buildableArea[x][y].getX();
-                int tileY = (int) buildableArea[x][y].getY();
-                float xx = (float) Math.pow(mouseX - tileX, 2);
-                float yy = (float) Math.pow(mouseY - tileY, 2);
-                float distance = (float) Math.sqrt(xx + yy);
-                
-                if (distance < lastDistance) {
-                    lastDistance = distance;
-                    last = buildableArea[x][y];
+                if (!builtArea[x][y]) {
+                    int tileX = (int) buildableArea[x][y].getX();
+                    int tileY = (int) buildableArea[x][y].getY();
+                    float xx = (float) Math.pow(mouseX - tileX, 2);
+                    float yy = (float) Math.pow(mouseY - tileY, 2);
+                    float distance = (float) Math.sqrt(xx + yy);
+
+                    if (distance < lastDistance) {
+                        lastDistance = distance;
+                        result = buildableArea[x][y];
+                        buildingLocationValueInArray_X = x;
+                        buildingLocationValueInArray_Y = y;
+                    }
                 }
             }
         }
 
-        result = last;
         return result;
     }
 }

@@ -43,6 +43,11 @@ public class Barracks extends Buildable implements BuildableInterface {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public void onCreateUnit() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     
     
 }

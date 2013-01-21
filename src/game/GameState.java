@@ -30,7 +30,7 @@ public class GameState extends BasicGameState {
     lighting.LightManager LightManager;
     ArrayList<Light> lights = new ArrayList<>();
     //private Color sharedColor = new Color(1f, 1f, 1f, 1f);
-    ArrayList<Buildable> BuildingList = new ArrayList<>();
+    private static ArrayList<Buildable> BuildingList = new ArrayList<>();
     Interface game_interface;
 
     //building.Buildable a = new building.Barracks(building.Buildable.BUILDING_BARRACKS, 50, 50);
@@ -97,7 +97,11 @@ public class GameState extends BasicGameState {
 
 
         _map.render(container, game, g);
-
+        
+        for (int i = 0; i < BuildingList.size(); i++) {
+            BuildingList.get(i).render(container, game, g);
+        }
+        
         LightManager.render(container, g);
 
         game_interface.render(container, game, g);
@@ -105,9 +109,7 @@ public class GameState extends BasicGameState {
 
     }
 
-    
-    public void addBuilding(building.Buildable building) {
+    public static void addBuilding(building.Buildable building) {
         BuildingList.add(building);
     }
-    
 }

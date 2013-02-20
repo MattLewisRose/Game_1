@@ -22,10 +22,12 @@ package game;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -49,6 +51,11 @@ public class Interface {
     boolean[][] builtArea = new boolean[14][10];
     int buildingLocationValueInArray_X = 0; // Used to set the builtArea location
     int buildingLocationValueInArray_Y = 0; // Used to set the builtArea location
+    public static ArrayList<InterfaceMessage> bottom_right_text = new ArrayList<>(0);
+    Shape dragBox = new Rectangle(0, 0, 0, 0);
+    int drag_x = 0;
+    int drag_y = 0;
+    MouseListener test;
 
     Interface() {
         INGAME_background = ResourceManager.getInstance().getImage("ingame_background");
@@ -60,13 +67,61 @@ public class Interface {
             }
         }
 
-        GameButtons.add(new InterfaceButton("interface_button_barrack", 880, 85) {
+        GameButtons.add(new InterfaceButton("interface_button_barrack", 900, 85) {
             @Override
             void onClick() {
                 mouse_state = MOUSE_STATE_BUILD_BARRACKS;
             }
         });
 
+        bottom_right_text.add(new InterfaceMessage("Hello World", 2, 0.8f));
+        test = new MouseListener() {
+            @Override
+            public void mouseClicked(int i, int i1, int i2, int i3) {
+            }
+
+            @Override
+            public void mousePressed(int i, int i1, int i2) {
+                drag_x = i;
+                drag_y = i1;
+            }
+
+            @Override
+            public void mouseReleased(int i, int i1, int i2) {
+                dragBox = new Rectangle(0,0,0,0);
+            }
+
+            @Override
+            public void mouseMoved(int i, int i1, int i2, int i3) {
+            }
+
+            @Override
+            public void mouseDragged(int i, int i1, int i2, int i3) {
+                dragBox = new Rectangle(drag_x, drag_y, i2 - drag_x, i3 - drag_y);
+                System.out.println("x" + i + " y" + i1 + " h" + i2 + " w" + i3);
+            }
+
+            @Override
+            public void setInput(Input input) {
+            }
+
+            @Override
+            public boolean isAcceptingInput() {
+                return true;
+            }
+
+            @Override
+            public void inputEnded() {
+            }
+
+            @Override
+            public void inputStarted() {
+            }
+
+            @Override
+            public void mouseWheelMoved(int i) {
+            }
+        };
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -79,9 +134,15 @@ public class Interface {
         boolean isLeftMouseClicked = false;
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             isLeftMouseClicked = true;
+            drag_x = mouseX;
+            drag_y = mouseY;
         }
+        
+        input.addMouseListener(test);
 
         if (isLeftMouseClicked) {
+
+
             for (int i = 0; i < GameButtons.size(); i++) {
                 GameButtons.get(i).update(container, game, delta);
             }
@@ -90,6 +151,7 @@ public class Interface {
         if (isLeftMouseClicked) {
             switch (mouse_state) {
                 case MOUSE_STATE_EMPTY:
+
                     break;
                 case MOUSE_STATE_ATTACK:
                     // Set mouse icon to the attack icon animation
@@ -113,6 +175,13 @@ public class Interface {
         Shape temp = getClosestTile();
         imageX = (int) temp.getX();
         imageY = (int) temp.getY();
+
+        for (int i = 0; i < bottom_right_text.size(); i++) {
+            bottom_right_text.get(i).update(container, delta);
+            if (bottom_right_text.get(i).deadTime < System.currentTimeMillis()) {
+                bottom_right_text.remove(i);
+            }
+        }
 
 
     }
@@ -139,12 +208,18 @@ public class Interface {
         }
 
 
+        for (int i = 0; i < bottom_right_text.size(); i++) {
+            bottom_right_text.get(i).render(container, g);
+        }
+
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 14; x++) {
                 //g.fill(buildableArea[x][y]);
             }
         }
-
+        g.setColor(Color.white);
+        g.setLineWidth(2);
+        g.draw(dragBox);
     }
 
     private Shape getClosestTile() {
